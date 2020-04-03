@@ -71,7 +71,19 @@ public class ExpressionEvaluator implements IExpressionEvaluator {
      * @return true if the expression passes all tests
      */
     private static boolean isValidInfix(String expression){
-        //remove unnecessary whitespace
+		//make sure there are no two consecutive operands
+    	String[] a = expression.trim().split("\\s+");
+    	for (int i = 0; i < a.length-1; i++) {
+    		char c1 = a[i].charAt(0);
+    		char c2 = a[i+1].charAt(0);
+    		if (!(isAnOperator(c1) || c1=='(' || c1==')')){
+    			if (!(isAnOperator(c2) || c2=='(' || c2==')'))
+    				return false;
+    		}
+    	}
+		
+    	
+    	//remove unnecessary whitespace
         expression = expression.replaceAll("\\s+", "");
         //returns false if expression starts or ends with an operator
         if (isAnOperator(expression.charAt(0)) || isAnOperator(expression.charAt(expression.length()-1)))

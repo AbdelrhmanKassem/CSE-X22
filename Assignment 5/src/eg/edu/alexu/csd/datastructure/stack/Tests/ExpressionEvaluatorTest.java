@@ -18,7 +18,7 @@ class ExpressionEvaluatorTest {
 	@Test
 	public void test1() {
 		ExpressionEvaluator test = new ExpressionEvaluator();
-		String expression = test.infixToPostfix("12 + 3 * 4");
+		String expression = test.infixToPostfix("12 + (3 * 4)");
 		String result = "12 3 4 * +";
 		int value = test.evaluate(result);
         assertEquals(result, expression);
@@ -28,7 +28,7 @@ class ExpressionEvaluatorTest {
 	@Test
 	public void test2() {
 		ExpressionEvaluator test = new ExpressionEvaluator();
-		String expression = test.infixToPostfix("ax * by + 5");
+		String expression = test.infixToPostfix("(ax * by) + 5");
 		String result = "ax by * 5 +";
 		int value = test.evaluate("2 4 * 5 +");
         assertEquals(result, expression);
@@ -147,6 +147,12 @@ class ExpressionEvaluatorTest {
 		assertThrows(InputMismatchException.class,()-> test.infixToPostfix("a * (b + 5"));
 		assertThrows(InputMismatchException.class,()-> test.evaluate("a b * c /"));		
 
+	}	
+	
+	@Test
+	public void test16() {
+		ExpressionEvaluator test = new ExpressionEvaluator();
+		assertThrows(InputMismatchException.class,()-> test.infixToPostfix("a b * (b c + 5"));
 	}
 	
 
